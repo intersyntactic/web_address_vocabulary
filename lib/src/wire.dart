@@ -1,11 +1,19 @@
 import 'web_address.dart';
 
-/// [json] as a `Map<String, Object?>`, or a [FormatException] naming
-/// [field].
-Map<String, Object?> _object(Object? json, String field) => switch (json) {
-  final Map<String, Object?> map => map,
-  _ => throw FormatException('$field: not an object'),
-};
+/// [json] as a `Map<String, Object?>` holding no key but [keys], or a
+/// [FormatException] naming [field] and the first key it doesn't expect.
+Map<String, Object?> _object(Object? json, String field, Set<String> keys) {
+  final map = switch (json) {
+    final Map<String, Object?> map => map,
+    _ => throw FormatException('$field: not an object'),
+  };
+  for (final key in map.keys) {
+    if (!keys.contains(key)) {
+      throw FormatException('$field.$key: not expected here');
+    }
+  }
+  return map;
+}
 
 /// [json] as a [String], or a [FormatException] naming [field].
 String _string(Object? json, String field) => switch (json) {
@@ -55,7 +63,7 @@ AddressPrefix decodeAddressPrefix(
   Object? json, [
   String field = 'addressPrefix',
 ]) {
-  final map = _object(json, field);
+  final map = _object(json, field, const {'origin', 'pathPrefix'});
   return AddressPrefix.of(
     decodeOrigin(map['origin'], '$field.origin'),
     decodePathPrefix(map['pathPrefix'], '$field.pathPrefix'),
