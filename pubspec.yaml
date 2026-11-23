@@ -1,0 +1,15 @@
+name: is_web_address_vocabulary
+description: >-
+  Web addresses as values that can't name somewhere other than where they
+  were decided to go: an origin, a path on it, and the prefixes that bound
+  how far a grant reaches, with their JSON.
+version: 0.1.0
+repository: https://github.com/intersyntactic/web_address_vocabulary
+
+environment:
+  sdk: ^3.13.0
+
+dev_dependencies:
+  analyzer: ^14.7.0
+  lints: ^6.1.0
+  test: ^1.25.0
