@@ -76,5 +76,22 @@ void main() {
         throwsFormatException,
       );
     });
+
+    test('refuses a key it does not expect, naming it', () {
+      expect(
+        () => decodeAddressPrefix({
+          'origin': 'https://a.example',
+          'pathPrefix': '/a/',
+          'x': 1,
+        }),
+        throwsA(
+          isA<FormatException>().having(
+            (e) => e.message,
+            'message',
+            contains('addressPrefix.x'),
+          ),
+        ),
+      );
+    });
   });
 }
