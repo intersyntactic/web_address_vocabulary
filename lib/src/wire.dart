@@ -37,7 +37,6 @@ Object? encodeWebPath(WebPath path) => path.value;
 
 WebPath decodeWebPath(Object? json, [String field = 'path']) {
   final raw = _string(json, field);
-  if (raw.isEmpty) return WebPath.root;
   return WebPath.parse(raw) ??
       (throw FormatException('$field: not a web path ($raw)'));
 }

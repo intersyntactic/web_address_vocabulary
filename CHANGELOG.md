@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.1.2
+
+- `WebPath.parse('')` returns `WebPath.root`, the bare site, instead of
+  null. `root` is the empty path, so the type's own reader now accepts
+  every value it builds. `decodeWebPath` already treated `""` as `root`
+  and still does; a caller that wrote
+  `raw.isEmpty ? WebPath.root : WebPath.parse(raw)` can call
+  `WebPath.parse(raw)`. Nothing sent changes.
+
 ## 0.1.1
 
 - `decodeAddressPrefix` refuses any key but `origin` and `pathPrefix`,
