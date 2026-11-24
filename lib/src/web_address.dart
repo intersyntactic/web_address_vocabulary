@@ -40,10 +40,13 @@ final class Origin {
 final class WebPath {
   const WebPath._(this.value);
 
+  /// No path at all: the origin's address is sent as it is.
   static const root = WebPath._('');
 
   /// [raw] as a path on an origin, optionally with a `?` query, or null
-  /// unless it is exactly what is sent: it starts with exactly one `/`,
+  /// unless it is exactly what is sent. The empty string is [root]: appending
+  /// nothing can't change which site is reached. Any other path
+  /// starts with exactly one `/`,
   /// carries no `..`, `@` or `#`, no `%25` that a second decode would turn
   /// into an escaped `.`, `/`, `\` or `%`, and a URI parser leaves its path
   /// and query byte for byte as they are.
@@ -58,6 +61,7 @@ final class WebPath {
   /// `%2E`), since a parser rewrites both: `Uri.encodeComponent` produces
   /// escapes that pass.
   static WebPath? parse(String raw) {
+    if (raw.isEmpty) return root;
     if (!raw.startsWith('/') || raw.startsWith('//')) return null;
     if (raw.contains('..') ||
         raw.contains('@') ||

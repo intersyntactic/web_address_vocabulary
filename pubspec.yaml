@@ -3,7 +3,7 @@ description: >-
   Web addresses as values that can't name somewhere other than where they
   were decided to go: an origin, a path on it, and the prefixes that bound
   how far a grant reaches, with their JSON.
-version: 0.1.1
+version: 0.1.2
 repository: https://github.com/intersyntactic/web_address_vocabulary
 
 environment:

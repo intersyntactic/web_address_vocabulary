@@ -10,13 +10,14 @@ void main() {
       );
     });
 
-    test('root is the empty path, not through parse', () {
+    test('the empty string is root, the bare site', () {
       expect(WebPath.root.value, '');
+      expect(WebPath.parse(''), WebPath.root);
     });
 
     test('refuses a path with no leading slash', () {
       expect(WebPath.parse('v3/conversations'), isNull);
-      expect(WebPath.parse(''), isNull);
+      expect(WebPath.parse(' '), isNull);
     });
 
     test('refuses a protocol-relative path', () {
